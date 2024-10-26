@@ -15,6 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Workspace image
+      working-directory: ./image
       run: docker build . --file image/Dockerfile --tag ghcr.io/sprint-cloud/workspace/ubuntu:$(date +%s)
     - name: Push Workspace image
       run: docker push hcr.io/sprint-cloud/workspace/ubuntu:latest

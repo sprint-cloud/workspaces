@@ -1,4 +1,6 @@
 FROM codercom/enterprise-base:ubuntu
+LABEL org.opencontainers.image.source https://github.com/sprint-cloud/workspaces
+
 USER root
 # Install packages
 RUN apt update && sudo apt install -y \
