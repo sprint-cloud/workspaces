@@ -1,0 +1,31 @@
+name: Build Workspace image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-push-workspace-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: changes
+      with:
+        filters: |
+          image:
+            - 'image/**'
+          template:
+            - 'workspace/**'   
+    - uses: docker/build-push-action@v6
+      with:
+        context: ./image
+        push: true
+        tags: ghcr.io/sprint-cloud/workspace/ubuntu:${{ github.sha }}
