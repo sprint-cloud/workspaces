@@ -22,9 +22,10 @@ jobs:
             - 'image/**'
           template:
             - 'workspace/**'   
-    - name: Build the Workspace image
-      working-directory: ./image
+    - uses: docker/build-push-action@v6
+      with:
+        context: ./image
+        push: true
+        tags: ghcr.io/sprint-cloud/workspace/ubuntu:latest
       run: docker build . --file Dockerfile --tag ghcr.io/sprint-cloud/workspace/ubuntu:$(date +%s)
       if: steps.changes.outputs.image == 'true'
-    - name: Push Workspace image
-      run: docker push ghcr.io/sprint-cloud/workspace/ubuntu:latest
