@@ -14,8 +14,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: changes
+      with:
+        filters: |
+          image:
+            - 'image/**'
+          template:
+            - 'workspace/**'   
     - name: Build the Workspace image
       working-directory: ./image
       run: docker build . --file Dockerfile --tag ghcr.io/sprint-cloud/workspace/ubuntu:$(date +%s)
+      if: steps.changes.outputs.image == 'true'
     - name: Push Workspace image
-      run: docker push hcr.io/sprint-cloud/workspace/ubuntu:latest
+      run: docker push ghcr.io/sprint-cloud/workspace/ubuntu:latest
