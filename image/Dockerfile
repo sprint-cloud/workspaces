@@ -8,7 +8,8 @@ RUN apt update && sudo apt install -y \
     nodejs \
     npm \
     php-cli\
-    unzip
+    unzip\
+    golang-go
 
 COPY --from=composer/composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=bitnami/kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/
