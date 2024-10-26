@@ -26,5 +26,5 @@ jobs:
       with:
         context: ./image
         push: true
-        tags: ghcr.io/sprint-cloud/workspace/ubuntu:${{ git_hash }}
+        tags: ghcr.io/sprint-cloud/workspace/ubuntu:${{env.GITHUB_SHA}}
       #if: steps.changes.outputs.image == 'true'
