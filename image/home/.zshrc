@@ -1,5 +1,6 @@
 source antigen.zsh
 
+# Setup plugins
 antigen use oh-my-zsh
 antigen bundle git
 antigen bundle pip
