@@ -27,5 +27,4 @@ jobs:
         context: ./image
         push: true
         tags: ghcr.io/sprint-cloud/workspace/ubuntu:latest
-      run: docker build . --file Dockerfile --tag ghcr.io/sprint-cloud/workspace/ubuntu:$(date +%s)
       if: steps.changes.outputs.image == 'true'
