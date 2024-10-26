@@ -47,12 +47,11 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
-      - name: Update Workspace image in Coder template
+      - name: Update workspace image in Coder template
         working-directory: template/
-        run: sed -i 's@"ghcr.io/sprint-cloud/workspace/ubuntu:latest"@${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.push.outputs.digest}}@g' main.tf
-      - name: Commit Coder template
         run: |
+          sed -i 's@"ghcr.io/sprint-cloud/workspace/ubuntu:latest"@${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.push.outputs.digest}}@g' main.tf
           git config --global user.name 'Github Actions'
           git config --global user.email 'actions@users.noreply.github.com'
-          git commit -am
+          git commit -am 'Automated workspace image update in template.'
           git push
