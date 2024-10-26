@@ -9,9 +9,9 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
+    permissions:
+      packages: write
     steps:
     - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v3
@@ -24,8 +24,7 @@ jobs:
             - 'workspace/**'   
     - uses: docker/build-push-action@v6
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
         context: ./image
         push: true
-        tags: ghcr.io/sprint-cloud/workspace/ubuntu:latest
+        tags: ghcr.io/sprint-cloud/workspace/ubuntu:${git_hash}
       if: steps.changes.outputs.image == 'true'
