@@ -1,4 +1,4 @@
-source antigen.zsh
+source ~/antigen.zsh
 
 # Install zsh plugins
 antigen use oh-my-zsh
