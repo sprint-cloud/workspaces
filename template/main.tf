@@ -93,7 +93,7 @@ resource "coder_agent" "main" {
     curl -fsSL https://code-server.dev/install.sh | sh -s -- --method=standalone --prefix=/tmp/code-server
 
     # Start code-server in the background.
-    /tmp/code-server/bin/code-server --auth none --port 13337 /home/coder > /tmp/code-server.log 2>&1 &
+    /tmp/code-server/bin/code-server --auth none --port 13337 >/tmp/code-server.log 2>&1 &
   EOT
 
   # The following metadata blocks are optional. They are used to display
