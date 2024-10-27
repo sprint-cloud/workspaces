@@ -9,7 +9,10 @@ RUN apt update && sudo apt install -y \
     npm \
     php-cli\
     unzip\
-    golang-go
+    golang-go\
+    dotnet-sdk-8.0
+
+RUN apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 COPY --from=composer/composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=bitnami/kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/
