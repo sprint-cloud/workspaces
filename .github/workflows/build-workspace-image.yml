@@ -57,6 +57,6 @@ jobs:
           
           git checkout -b $BRANCH
           sed -i 's<"ghcr.io/sprint-cloud/workspaces.*"<"$IMAGE"<g' main.tf
-          git commit -am "Automated: Update Workspace image to  $IMAGE"
+          git commit -am 'Automated: Update Workspace image to: $IMAGE'
           git push --set-upstream origin $BRANCH
           gh pr create --fill
