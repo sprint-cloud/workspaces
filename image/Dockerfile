@@ -16,6 +16,9 @@ RUN apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,
 
 COPY --from=composer/composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=bitnami/kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/
+COPY --from=argoproj/argocd /usr/local/bin/argocd /usr/local/bin/
+COPY --from=bitnami/argo-workflow-cli /argo /usr/local/bin/
+COPY --from=maniator/gh /usr/bin/gh /usr/local/bin/
 
 RUN mkdir /template && chown -R coder:coder /template
 RUN usermod --shell /bin/zsh coder 
