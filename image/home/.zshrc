@@ -9,5 +9,3 @@ antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme robbyrussell
 antigen apply
-
-source $("/home/coder/bin/trdl" use werf "2" "stable")
