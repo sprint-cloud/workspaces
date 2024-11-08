@@ -50,8 +50,8 @@ jobs:
       - name: Create pull request to update template
         working-directory: template/
         run: |
-          $BRANCH=build-${{ github.run_id }}
-          $IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest}}
+          $BRANCH="build-${{ github.run_id }}"
+          $IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest}}""
           git config --global user.name 'Github Actions'
           git config --global user.email 'actions@users.noreply.github.com'
           
