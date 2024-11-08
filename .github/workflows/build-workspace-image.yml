@@ -47,3 +47,16 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+      - name: Create pull request to update template
+        working-directory: template/
+        run: |
+          $BRANCH=build-${{ github.run_id }}
+          $IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest}}
+          git config --global user.name 'Github Actions'
+          git config --global user.email 'actions@users.noreply.github.com'
+          
+          git checkout -b $BRANCH
+          sed -i 's<"ghcr.io/sprint-cloud/workspaces.*"<"$IMAGE"<g' main.tf
+          git commit -am "Automated: Update Workspace image to  $IMAGE"
+          git push --set-upstream origin $BRANCH
+          gh pr create --fill
