@@ -86,7 +86,7 @@ resource "coder_agent" "main" {
     set -e
 
     # Bootstrap homedir
-    rsync -ra /template/coder/* /home/coder/
+    rsync -ra /template/coder/ /home/coder/
 
     # Install the latest code-server.
     # Append "--version x.x.x" to install a specific version of code-server.
