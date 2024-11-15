@@ -298,7 +298,7 @@ resource "kubernetes_deployment" "main" {
 
         container {
           name              = "dev"
-          image             = "ghcr.io/sprint-cloud/images:c041bc03e86f71b2aa8e451d55e121e2e2d7376b05c53fe543ab4b12-1731672439490"
+          image             = "ghcr.io/sprint-cloud/images@sha256:383abcae0bb690b55adc4fbeef5eca4ec5b477fd8c99dc39513a3fa10f2a74d8"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
