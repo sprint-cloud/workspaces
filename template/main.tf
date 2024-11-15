@@ -33,6 +33,15 @@ variable "namespace" {
   description = "The Kubernetes namespace to create workspaces in (must exist prior to creating workspaces). If the Coder host is itself running as a Pod on the same Kubernetes cluster as you are deploying workspaces to, set this to the same namespace."
 }
 
+variable "image" {
+  type = object({
+    name = string
+    tag = string
+  })
+  description = "Image name"
+}
+
+
 data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"
@@ -298,7 +307,7 @@ resource "kubernetes_deployment" "main" {
 
         container {
           name              = "dev"
-          image             = "ghcr.io/sprint-cloud/images@sha256:383abcae0bb690b55adc4fbeef5eca4ec5b477fd8c99dc39513a3fa10f2a74d8"
+          image             = "${var.image.name}:${var.image.tag}"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
