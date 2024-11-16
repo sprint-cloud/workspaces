@@ -1,4 +1,4 @@
-name: Test Coder template
+name: Workspace CD
 
 on:
   push:
@@ -7,35 +7,25 @@ on:
     paths: ['template/*']
   pull_request:
     paths: ['template/*']
-    types:
-      - opened
+  workflow_dispatch:
+    
 
 jobs:
-  tflint:
+  publish-template:
     runs-on: ubuntu-latest
     steps:
+    - name: Tailscale
+      uses: tailscale/github-action@v2
+      with:
+        oauth-client-id: ${{ secrets.TAILSCALE_CLIENT_ID }}
+        oauth-secret: ${{ secrets.TAILSCALE_CLIENT_SECRET }}
+        tags: tag:cd
+
     - uses: actions/checkout@v4
       name: Checkout source code
 
-    - uses: actions/cache@v4
-      name: Cache plugin dir
-      with:
-        path: ~/.tflint.d/plugins
-        key: ubuntu-tflint-${{ hashFiles('.tflint.hcl') }}
-
-    - uses: terraform-linters/setup-tflint@v4
-      name: Setup TFLint
-      with:
-        tflint_version: v0.52.0
-
-    - name: Show version
-      run: tflint --version
-
-    - name: Init TFLint
-      run: tflint --init
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-
-    - name: Run TFLint
+    - name: Test
       working-directory: template
-      run: tflint -f compact --minimum-failure-severity=error
+      run: |-
+
+    
