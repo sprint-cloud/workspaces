@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM codercom/enterprise-base:latest
 LABEL org.opencontainers.image.source https://github.com/sprint-cloud/workspaces
 ARG HOME=/workspace
 ARG USER=sprinter
