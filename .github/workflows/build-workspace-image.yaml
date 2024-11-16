@@ -52,8 +52,9 @@ jobs:
         working-directory: template
         run: |-
           git checkout -b "update-image-$IMAGE_TAG"
-          ls -la
           sed -i "s|image.=.*|image = $IMAGE_NAME:$IMAGE_TAG|" image.auto.tfvars
+          git commit -am "Update Image to $IMAGE_NAME:$IMAGE_TAG"
+          git push
 
           
 
