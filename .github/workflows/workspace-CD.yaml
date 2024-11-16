@@ -29,6 +29,7 @@ jobs:
       with:
         access_url: ${{ secrets.CODER_URL }}
         coder_session_token: ${{ secrets.CODER_TOKEN }}
+        version: 1.76.6
     - uses: actions/checkout@v4
       name: Checkout source code
 
