@@ -1,4 +1,4 @@
 namespace = "workspaces"
-image = "image:latest"
+image = "$IMAGE_NAME:$IMAGE_TAG"
 
 
