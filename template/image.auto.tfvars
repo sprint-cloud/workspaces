@@ -1,4 +1,4 @@
 namespace = "workspaces"
-image = 'ghcr.io/sprint-cloud/workspace:954502d0e805d0fed3fd94037b481da72c68a686'
+image = "ghcr.io/sprint-cloud/workspace:41e7591b51304c656a8da4d8ca84fb13975bfb51"
 
 
