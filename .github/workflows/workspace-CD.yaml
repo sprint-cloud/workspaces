@@ -5,11 +5,15 @@ on:
     branches:
       - main
     paths: ['template/*']
-  pull_request:
-    paths: ['template/*']
   workflow_dispatch:
     
-
+env:
+  TEMPLATE_NAME: sprint-default-template
+  TEMPLATE_DISPLAY_NAME: "Sprint Developer Template"
+  TEMPLATE_DESCRIPTION: |
+    Ondersteund: Docker, Python, PHP (composer), Javascript(NodeJS), C# en Golang. 
+  TEMPLATE_CONTECT: template
+  
 jobs:
   publish-template:
     runs-on: ubuntu-latest
@@ -20,13 +24,16 @@ jobs:
         oauth-client-id: ${{ secrets.TAILSCALE_CLIENT_ID }}
         oauth-secret: ${{ secrets.TAILSCALE_CLIENT_SECRET }}
         tags: tag:cd
-
+    - name: Setup Coder
+      uses: coder/setup-action@v1
+      with:
+        access_url: 'https://coder.sprintuhub.nl'
+        coder_session_token: ${{ secrets.CODER_SESSION_TOKEN }}
     - uses: actions/checkout@v4
       name: Checkout source code
 
-    - name: Test
-      working-directory: template
+    - name: Publish Template
       run: |-
-        curl https://coder.sprinthub.nl
+        coder template push $TEMPLATE_NAME -y -d $TEMPLATE_CONTEXT
 
     
