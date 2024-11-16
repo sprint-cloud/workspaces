@@ -59,7 +59,7 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "noreply@sprinthub.nl"
           git checkout -b $BRANCH
-          sed -i "s|image.=.*|image = '$IMAGE'|" image.auto.tfvars
+          sed -i "s|image.=.*|image = \"$IMAGE\"|" image.auto.tfvars
           git --no-pager diff
           git commit -am "[Auto Generated] Update Image to $IMAGE"
           git push --set-upstream origin $BRANCH
