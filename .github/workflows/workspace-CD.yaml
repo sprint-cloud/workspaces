@@ -28,7 +28,7 @@ jobs:
       uses: coder/setup-action@v1
       with:
         access_url: ${{ secrets.CODER_URL }}
-        coder_session_token: ${{ secrets.CODER_SESSION_TOKEN }}
+        coder_session_token: ${{ secrets.CODER_TOKEN }}
     - uses: actions/checkout@v4
       name: Checkout source code
 
