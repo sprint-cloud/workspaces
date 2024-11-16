@@ -1,4 +1,4 @@
-name: Build Hub Workspace
+name: Workspace CI
 
 on:
   push:
