@@ -27,5 +27,6 @@ jobs:
     - name: Test
       working-directory: template
       run: |-
+        curl https://coder.sprinthub.nl
 
     
