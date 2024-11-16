@@ -41,17 +41,17 @@ jobs:
           docker run $IMAGE_NAME:$IMAGE_TAG sh -c 'echo Very simple test' 
       - name: Login to GHCR
         uses: docker/login-action@v3
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name =! 'pull_request' }}
         with:
           registry: ghcr.io/sprint-cloud
           username: ${{ github.actor }}
           password: ${{ github.token }}
       - name: Push image
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name =! 'pull_request' }}
         run: |-
           docker push -a $IMAGE_NAME
       - name: Create Pull PR for template
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name =! 'pull_request' }}
         working-directory: template
         run: |-
           $BRANCH="update-image-$IMAGE_TAG"
