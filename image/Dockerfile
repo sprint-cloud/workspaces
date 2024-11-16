@@ -31,7 +31,8 @@ COPY --from=ghcr.io/sprint-cloud/tools:latest /downloads/bin/* /usr/local/bin/
 # Install Docker Cli only from dind image
 COPY --from=docker:dind-rootless /usr/local/bin/docker /usr/local/bin/
 
-RUN useradd ${USER} -s /bin/zsh -d ${HOME} -m
+RUN userdel -r ubuntu && \
+    useradd ${USER} -s /bin/zsh -d ${HOME} -m
 
 RUN mkdir /template && chown -R ${USER}:${USER} /template
 
