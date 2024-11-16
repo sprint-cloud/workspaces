@@ -12,7 +12,7 @@ env:
   TEMPLATE_DISPLAY_NAME: "Sprint Developer Template"
   TEMPLATE_DESCRIPTION: |
     Ondersteund: Docker, Python, PHP (composer), Javascript(NodeJS), C# en Golang. 
-  TEMPLATE_CONTECT: template
+  TEMPLATE_CONTEXT: template
   
 jobs:
   publish-template:
