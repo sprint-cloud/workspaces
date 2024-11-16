@@ -41,20 +41,26 @@ jobs:
           docker run $IMAGE_NAME:$IMAGE_TAG sh -c 'echo Very simple test' 
       - name: Login to GHCR
         uses: docker/login-action@v3
+        if: ${{ github.event_name == 'push' }}
         with:
           registry: ghcr.io/sprint-cloud
           username: ${{ github.actor }}
           password: ${{ github.token }}
       - name: Push image
+        if: ${{ github.event_name == 'push' }}
         run: |-
           docker push -a $IMAGE_NAME
       - name: Create Pull PR for template
+        if: ${{ github.event_name == 'push' }}
         working-directory: template
         run: |-
-          git checkout -b "update-image-$IMAGE_TAG"
-          sed -i "s|image.=.*|image = $IMAGE_NAME:$IMAGE_TAG|" image.auto.tfvars
-          git commit -am "Update Image to $IMAGE_NAME:$IMAGE_TAG"
-          git push
+          $BRANCH="update-image-$IMAGE_TAG"
+          $IMAGE="$IMAGE_NAME:$IMAGE_TAG"
+          git checkout -b $BRANCH
+          sed -i "s|image.=.*|image = $IMAGE|" image.auto.tfvars
+          git commit -am "Update Image to $IMAGE"
+          git push --set-upstream origin $BRANCH
+          gh pr create --fill
 
           
 
