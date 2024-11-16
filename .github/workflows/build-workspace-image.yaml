@@ -17,7 +17,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
       attestations: write
       id-token: write
@@ -54,11 +54,13 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         working-directory: template
         run: |-
-          $BRANCH="update-image-$IMAGE_TAG"
-          $IMAGE="$IMAGE_NAME:$IMAGE_TAG"
+          BRANCH="update-image-$IMAGE_TAG"
+          IMAGE="$IMAGE_NAME:$IMAGE_TAG"
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "noreply@sprinthub.nl"
           git checkout -b $BRANCH
           sed -i "s|image.=.*|image = $IMAGE|" image.auto.tfvars
-          git commit -am "Update Image to $IMAGE"
+          git commit -am "[Auto Generated] Update Image to $IMAGE"
           git push --set-upstream origin $BRANCH
           gh pr create --fill
 
