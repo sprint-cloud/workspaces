@@ -34,11 +34,8 @@ variable "namespace" {
 }
 
 variable "image" {
-  type = object({
-    name = string
-    tag = string
-  })
-  description = "Image name"
+  type = string
+  description = "Workspace Image"
 }
 
 
@@ -307,7 +304,7 @@ resource "kubernetes_deployment" "main" {
 
         container {
           name              = "dev"
-          image             = "${var.image.name}:${var.image.tag}"
+          image             = "${var.image}"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
