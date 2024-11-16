@@ -94,7 +94,7 @@ resource "coder_agent" "main" {
     set -e
 
     # Bootstrap homedir
-    rsync -r /template/coder/ /home/coder/
+    rsync -r /template/workspace/ /workspace
 
     # Install the latest code-server.
     # Append "--version x.x.x" to install a specific version of code-server.
@@ -340,7 +340,7 @@ resource "kubernetes_deployment" "main" {
             }
           }
           volume_mount {
-            mount_path = "/home/coder"
+            mount_path = "/workspace"
             name       = "home"
             read_only  = false
           }
