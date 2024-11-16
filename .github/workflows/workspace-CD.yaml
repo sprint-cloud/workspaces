@@ -34,6 +34,6 @@ jobs:
 
     - name: Publish Template
       run: |-
-        coder template push $TEMPLATE_NAME -y -d $TEMPLATE_CONTEXT
+        coder template push $TEMPLATE_NAME -y -d $TEMPLATE_CONTEXT -m $(git log -1 --pretty=%B)
 
     
