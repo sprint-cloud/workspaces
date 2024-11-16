@@ -4,13 +4,13 @@ on:
   push:
     branches: ['main']
     paths:
-    - workspace/*
+    - image/*
   workflow_dispatch:
 
 env:
   IMAGE_NAME: ghcr.io/sprint-cloud/workspace
   IMAGE_TAG: ${{ github.sha }}
-  IMAGE_CONTEXT: workspace
+  IMAGE_CONTEXT: image
   DOCKER_BUILDKIT: 1
   
 jobs:
@@ -49,10 +49,12 @@ jobs:
         run: |-
           docker push -a $IMAGE_NAME
       - name: Create Pull PR for template
-        env: 
-          BRANCH: "update-$IMAGE_NAME:$IMAGE_TAG"
+        working-directory: template
         run: |-
-          git checkout -b 
+          git checkout -b "update-image-$IMAGE_TAG"
+          ls -la
+          sed -i "s|image.=.*|image = $IMAGE_NAME:$IMAGE_TAG|" image.auto.tfvars
+
           
 
         
