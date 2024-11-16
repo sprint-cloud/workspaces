@@ -1,10 +1,13 @@
-FROM codercom/enterprise-base:latest
+FROM ubuntu:noble
 LABEL org.opencontainers.image.source https://github.com/sprint-cloud/workspaces
 ARG HOME=/workspace
 ARG USER=sprinter
+SHELL ["/bin/bash", "-c"]
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install packages
-RUN apk add --no-cache \
+RUN apt-get update && \
+    apt-get install --yes --no-install-recommends --no-install-suggests \
         curl \
         rsync \
         bash \
@@ -12,25 +15,30 @@ RUN apk add --no-cache \
         git \
         vim \
         nano \
-        docker-cli \
         python3 \
-        py3-virtualenv \
+        python3-pip \
+        python3-venv \
         php-cli \
         nodejs \
         npm \
         unzip \
-        go \
-        dotnet8-sdk
+        golang \
+        dotnet-sdk-8.0
 
+# Install tools from Hub tools image
 COPY --from=ghcr.io/sprint-cloud/tools:latest /downloads/bin/* /usr/local/bin/
 
-RUN adduser -D ${USER} -s /bin/zsh -h ${HOME}
+# Install Docker Cli only from dind image
+COPY --from=docker:dind-rootless /usr/local/bin/docker /usr/local/bin/
+
+RUN useradd ${USER} -s /bin/zsh -d ${HOME} -m
 
 RUN mkdir /template && chown -R ${USER}:${USER} /template
 
 USER sprinter
-COPY home/* ${HOME}
-RUN curl -L git.io/antigen > ${HOME}/antigen.zsh && \
-    /bin/zsh -c "source ${HOME}/.zshrc"
-RUN rsync -ar ${HOME} /template
-RUN rm -rf ${HOME}/*
+WORKDIR ${HOME}
+COPY --chown=${USER}:${USER} home/* .
+RUN curl -L git.io/antigen > antigen.zsh && \
+    /bin/zsh -c "source .zshrc"
+RUN rsync -rtv /workspace/ /template/
+#RUN rm -rf ${HOME}/*
