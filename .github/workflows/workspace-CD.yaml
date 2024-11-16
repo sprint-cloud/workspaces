@@ -27,7 +27,7 @@ jobs:
     - name: Setup Coder
       uses: coder/setup-action@v1
       with:
-        access_url: 'https://coder.sprintuhub.nl'
+        access_url: ${{ secrets.CODER_URL }}
         coder_session_token: ${{ secrets.CODER_SESSION_TOKEN }}
     - uses: actions/checkout@v4
       name: Checkout source code
