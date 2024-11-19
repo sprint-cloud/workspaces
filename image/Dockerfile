@@ -12,6 +12,7 @@ RUN apt-get update && \
         rsync \
         bash \
         zsh \
+        openssh-client \
         git \
         vim \
         nano \
