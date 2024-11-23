@@ -267,6 +267,7 @@ resource "kubernetes_deployment" "main" {
 
   spec {
     replicas = 1
+    revision_history_limit = 0
     selector {
       match_labels = {
         "app.kubernetes.io/name"     = "coder-workspace"
