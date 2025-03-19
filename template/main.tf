@@ -186,6 +186,9 @@ resource "kubernetes_persistent_volume_claim" "home" {
       "app.kubernetes.io/name"     = "coder-pvc"
       "app.kubernetes.io/instance" = "coder-pvc-${data.coder_workspace.me.id}"
       "app.kubernetes.io/part-of"  = "coder"
+      //Enable daily snapshots
+      "recurring-job.longhorn.io/source" = "enabled"
+      "recurring-job-group.longhorn.io/workspaces" = "enabled"
       //Coder-specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
